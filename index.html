@@ -61,22 +61,23 @@
       background: #ecf0f1;
       transform: scale(1.05);
     }
+    input[type='number'] {
+      padding: 6px;
+      border-radius: 8px;
+      width: 80px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <h1>📱 EKRAN.TJ-KBS</h1>
-
   <div class="section show" id="main-menu">
     <p style="font-size: 20px;">Моделро интихоб намоед:</p>
     <button class="btn" onclick="showModels('Samsung')">📱 Samsung</button>
     <button class="btn" onclick="showModels('iPhone')">🍏 iPhone</button>
-    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔴 Redmi</button>
-    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🟢 Realmi</button>
-    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔵 Huawei</button>
   </div>
-
   <div class="section" id="model-list" style="display:none;"></div>
-
   <script>
     const catalog = {
       Samsung: [
@@ -94,7 +95,6 @@
         { name: "iPhone XS Max", quality: "OLED", brand: "KBS", price: "170 сомонӣ" }
       ]
     };
-
     function showModels(category) {
       const section = document.getElementById("model-list");
       const mainMenu = document.getElementById("main-menu");
@@ -106,7 +106,8 @@
             🛠 Качество: ${item.quality}<br>
             🏷 Бренд: ${item.brand}<br>
             💰 Цена: ${item.price}<br>
-            <button class="btn" onclick="Telegram.WebApp.sendData('${item.name} | ${item.quality} | ${item.price}')">🛒 Заказать</button>
+            <input type="number" min="1" value="1" id="${item.name.replace(/\s/g, '')}-qty" placeholder="Кол-во"><br>
+            <button class="btn" onclick="orderNow('${item.name}', '${item.quality}', '${item.price}')">🛒 Заказать</button>
           </div>
         `;
       });
@@ -115,7 +116,12 @@
       section.style.display = "block";
       section.classList.add("show");
     }
-
+    function orderNow(name, quality, price) {
+      const qtyInput = document.getElementById(`${name.replace(/\s/g, '')}-qty`);
+      const quantity = qtyInput.value || 1;
+      const data = `${name} | ${quality} | ${price} | Кол-во: ${quantity}`;
+      Telegram.WebApp.sendData(data);
+    }
     function goBack() {
       document.getElementById("main-menu").style.display = "block";
       document.getElementById("model-list").style.display = "none";
