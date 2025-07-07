@@ -15,35 +15,25 @@
       line-height: 1.6;
       transition: all 0.3s ease-in-out;
     }
-    h1 {
-      font-size: 30px;
-      margin-bottom: 20px;
-    }
+    h1 { font-size: 30px; margin-bottom: 20px; }
     .section {
       margin-bottom: 40px;
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .section.show { opacity: 1; transform: translateY(0); }
     .card {
       background: rgba(255, 255, 255, 0.1);
       padding: 20px;
       margin: 20px auto;
-      width: 90%;
-      max-width: 400px;
+      width: 90%; max-width: 400px;
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
       font-size: 18px;
       line-height: 1.8;
     }
-    .card strong {
-      font-size: 22px;
-      font-weight: 600;
-    }
+    .card strong { font-size: 22px; font-weight: 600; }
     .btn {
       display: inline-block;
       padding: 12px 20px;
@@ -57,10 +47,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       transition: background 0.3s, transform 0.2s;
     }
-    .btn:hover {
-      background: #ecf0f1;
-      transform: scale(1.05);
-    }
+    .btn:hover { background: #ecf0f1; transform: scale(1.05); }
     input[type='number'] {
       padding: 6px;
       border-radius: 8px;
@@ -76,25 +63,34 @@
     <p style="font-size: 20px;">Моделро интихоб намоед:</p>
     <button class="btn" onclick="showModels('Samsung')">📱 Samsung</button>
     <button class="btn" onclick="showModels('iPhone')">🍏 iPhone</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔴 Redmi</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🟢 Realmi</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔵 Huawei</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔴 Tecno</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🟡 Infinix</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🟣 Oppo</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🔵 Vivo</button>
+    <button class="btn" onclick="alert('Скоро дастрас мешавад')">🟢 Honor</button>
   </div>
   <div class="section" id="model-list" style="display:none;"></div>
   <script>
     const catalog = {
       Samsung: [
-        { name: "Samsung A10", quality: "Original", brand: "KBS", price: "90 сомонӣ" },
-        { name: "Samsung A11", quality: "Original", brand: "KBS", price: "120 сомонӣ" },
-        { name: "Samsung A12", quality: "Original", brand: "KBS", price: "90 сомонӣ" },
-        { name: "Samsung A20", quality: "Incell", brand: "KBS", price: "110 сомонӣ" },
-        { name: "Samsung A21s", quality: "Incell", brand: "KBS", price: "120 сомонӣ" }
+        { name: "Samsung A10", quality: "Original", brand: "KBS", price: 90 },
+        { name: "Samsung A11", quality: "Original", brand: "KBS", price: 120 },
+        { name: "Samsung A12", quality: "Original", brand: "KBS", price: 90 },
+        { name: "Samsung A20", quality: "Incell", brand: "KBS", price: 110 },
+        { name: "Samsung A21s", quality: "Incell", brand: "KBS", price: 120 }
       ],
       iPhone: [
-        { name: "iPhone X", quality: "OLED", brand: "KBS", price: "160 сомонӣ" },
-        { name: "iPhone XS", quality: "OLED", brand: "KBS", price: "160 сомонӣ" },
-        { name: "iPhone XR", quality: "Incell", brand: "KBS", price: "130 сомонӣ" },
-        { name: "iPhone 11", quality: "Incell", brand: "KBS", price: "140 сомонӣ" },
-        { name: "iPhone XS Max", quality: "OLED", brand: "KBS", price: "170 сомонӣ" }
+        { name: "iPhone X", quality: "OLED", brand: "KBS", price: 160 },
+        { name: "iPhone XS", quality: "OLED", brand: "KBS", price: 160 },
+        { name: "iPhone XR", quality: "Incell", brand: "KBS", price: 130 },
+        { name: "iPhone 11", quality: "Incell", brand: "KBS", price: 140 },
+        { name: "iPhone XS Max", quality: "OLED", brand: "KBS", price: 170 }
       ]
     };
+
     function showModels(category) {
       const section = document.getElementById("model-list");
       const mainMenu = document.getElementById("main-menu");
@@ -105,9 +101,9 @@
             <strong>📱 ${item.name}</strong><br>
             🛠 Качество: ${item.quality}<br>
             🏷 Бренд: ${item.brand}<br>
-            💰 Цена: ${item.price}<br>
+            💰 Цена: ${item.price} сомонӣ<br>
             <input type="number" min="1" value="1" id="${item.name.replace(/\s/g, '')}-qty" placeholder="Кол-во"><br>
-            <button class="btn" onclick="orderNow('${item.name}', '${item.quality}', '${item.price}')">🛒 Заказать</button>
+            <button class="btn" onclick="orderNow('${item.name}', '${item.quality}', '${item.brand}', ${item.price})">🛒 Заказать</button>
           </div>
         `;
       });
@@ -116,12 +112,15 @@
       section.style.display = "block";
       section.classList.add("show");
     }
-    function orderNow(name, quality, price) {
+
+    function orderNow(name, quality, brand, price) {
       const qtyInput = document.getElementById(`${name.replace(/\s/g, '')}-qty`);
-      const quantity = qtyInput.value || 1;
-      const data = `${name} | ${quality} | ${price} | Кол-во: ${quantity}`;
+      const quantity = parseInt(qtyInput.value || 1);
+      const total = quantity * price;
+      const data = `${name} | ${quality} | ${brand} | ${price} | ${quantity} | ${total}`;
       Telegram.WebApp.sendData(data);
     }
+
     function goBack() {
       document.getElementById("main-menu").style.display = "block";
       document.getElementById("model-list").style.display = "none";
