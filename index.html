@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EKRAN.TJ-KBS Каталог</title>
   <style>
     body {
@@ -112,7 +112,7 @@
             🛠 Качество: ${item.quality}<br>
             🏷 Бренд: ${item.brand}<br>
             💰 Цена: ${item.price}<br>
-            <button class="btn" onclick="Telegram.WebApp.sendData('${item.name} / ${item.quality}')">🛒 Заказать</button>
+            <button class="btn" onclick="Telegram.WebApp.sendData('${item.name} | ${item.quality} | ${item.price}')">🛒 Заказать</button>
           </div>
         `;
       });
@@ -129,3 +129,4 @@
   </script>
 </body>
 </html>
+
