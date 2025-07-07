@@ -3,60 +3,131 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <title>EKRAN.TJ-KBS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EKRAN.TJ-KBS Каталог</title>
   <style>
     body {
-      background: linear-gradient(to right, #2c3e50, #3498db);
       font-family: 'Segoe UI', sans-serif;
-      color: #fff;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
       text-align: center;
       padding: 20px;
     }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+    h1, h2 {
+      color: #0d47a1;
     }
-
-    p {
-      font-size: 18px;
-      margin: 15px 0;
+    .section {
+      margin: 20px 0;
     }
-
-    .btn {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-      padding: 12px;
+    .btn, .model, .detail {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 18px;
+      border-radius: 10px;
       background: #ffffff;
-      color: #2c3e50;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: background 0.3s;
+      transition: transform 0.2s;
     }
-
-    .btn:hover {
-      background: #ecf0f1;
+    .btn:hover, .model:hover {
+      transform: scale(1.05);
     }
+    .hidden { display: none; }
+    img { max-width: 150px; border-radius: 8px; margin-top: 10px; }
+    .info { margin-top: 10px; font-size: 16px; }
   </style>
 </head>
 <body>
   <h1>📱 EKRAN.TJ-KBS</h1>
-  <p>Моделро интихоб намоед:</p>
-  <button class="btn">📱 Samsung</button>
-  <button class="btn">🍏 iPhone</button>
-  <button class="btn">🔴 Redmi</button>
-  <button class="btn">🟢 Realmi</button>
-  <button class="btn">🔵 Huawei</button>
 
-  <p>Сифати экранро интихоб намоед:</p>
-  <button class="btn">📦 Original</button>
-  <button class="btn">💡 OLED</button>
-  <button class="btn">🧩 Incell</button>
+  <div id="categories" class="section">
+    <h2>Категорияҳоро интихоб намоед:</h2>
+    <div class="btn" onclick="showModels('Samsung')">📱 Samsung</div>
+    <div class="btn" onclick="showModels('iPhone')">🍏 iPhone</div>
+    <div class="btn" onclick="showModels('Redmi')">🔴 Redmi</div>
+  </div>
+
+  <div id="models" class="section hidden">
+    <h2 id="model-title"></h2>
+    <div id="model-list"></div>
+    <div><br><button onclick="backToCategories()">🔙 Бозгашт</button></div>
+  </div>
+
+  <div id="details" class="section hidden">
+    <h2 id="detail-title"></h2>
+    <img id="detail-img" src="" alt="">
+    <div class="info" id="detail-info"></div>
+    <div><br><button onclick="backToModels()">🔙 Бозгашт</button></div>
+  </div>
+
+  <script>
+    const modelsData = {
+      "Samsung": [
+        {
+          name: "Samsung A10",
+          quality: "Original",
+          brand: "KBS",
+          price: "90 сомонӣ",
+          img: "https://telegra.ph/file/1e8f4c3a6d79c3e13221f.jpg"
+        },
+        {
+          name: "Samsung A11",
+          quality: "Original",
+          brand: "KBS",
+          price: "120 сомонӣ",
+          img: "https://telegra.ph/file/2c8b8fd782e9479b86f91.jpg"
+        },
+        {
+          name: "Samsung A12",
+          quality: "Original",
+          brand: "KBS",
+          price: "90 сомонӣ",
+          img: "https://telegra.ph/file/4c961eeb319dc5f4a6d66.jpg"
+        }
+      ]
+    };
+
+    let selectedCategory = '';
+
+    function showModels(category) {
+      selectedCategory = category;
+      document.getElementById('categories').classList.add('hidden');
+      document.getElementById('models').classList.remove('hidden');
+      document.getElementById('model-title').innerText = "📱 Моделҳои " + category;
+
+      const modelList = document.getElementById('model-list');
+      modelList.innerHTML = '';
+      modelsData[category].forEach((model, index) => {
+        const div = document.createElement('div');
+        div.className = 'model';
+        div.innerText = model.name;
+        div.onclick = () => showDetails(index);
+        modelList.appendChild(div);
+      });
+    }
+
+    function showDetails(index) {
+      const model = modelsData[selectedCategory][index];
+      document.getElementById('models').classList.add('hidden');
+      document.getElementById('details').classList.remove('hidden');
+      document.getElementById('detail-title').innerText = model.name;
+      document.getElementById('detail-img').src = model.img;
+      document.getElementById('detail-info').innerHTML = `
+        🛠 Качество: <b>${model.quality}</b><br>
+        🏷 Бренд: <b>${model.brand}</b><br>
+        💰 Цена: <b>${model.price}</b><br><br>
+        🛒 <button onclick="Telegram.WebApp.sendData('${model.name}')">Заказать</button>
+      `;
+    }
+
+    function backToCategories() {
+      document.getElementById('models').classList.add('hidden');
+      document.getElementById('categories').classList.remove('hidden');
+    }
+
+    function backToModels() {
+      document.getElementById('details').classList.add('hidden');
+      document.getElementById('models').classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
