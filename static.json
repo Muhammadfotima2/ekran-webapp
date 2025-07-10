@@ -3,6 +3,6 @@
   "root": ".",
   "clean_urls": true,
   "routes": {
-    "/": "catalog.html"
+    "/": "admin.html"
   }
 }
