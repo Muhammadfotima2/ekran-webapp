@@ -1,8 +1,8 @@
-{
+
   {
   "root": ".",
   "clean_urls": true,
   "routes": {
     "/": "admin.html"
   }
-}
+  }
