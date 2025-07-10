@@ -1,6 +1,6 @@
 
   {
-  "root": ".",
+  "root": "public",
   "clean_urls": true,
   "routes": {
     "/": "admin.html"
